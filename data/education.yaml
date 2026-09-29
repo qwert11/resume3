@@ -1,0 +1,17 @@
+# Годы у дипломов не показываем: они не добавляют к роли, зато выдают возраст.
+# `tags` — где показывать; без tags — везде.
+education:
+  - institution: {uk: "Запорізький інститут економіки та інформаційних технологій", en: "Zaporizhzhia Institute of Economics and Information Technologies"}
+    specialty: {uk: "Комп'ютерна інженерія · комп'ютерні системи та мережі", en: "Computer Engineering · computer systems and networks"}
+    period: ""
+    kind: degree
+  - institution: {uk: "Криворізький технічний університет", en: "Kryvyi Rih Technical University"}
+    specialty: {uk: "Гірничий інженер підземних розробок", en: "Mining Engineer, underground development"}
+    period: ""
+    kind: degree
+    tags: [full, delphi]
+  - institution: {uk: "Luxoft", en: "Luxoft"}
+    specialty: {uk: "Angular 9", en: "Angular 9"}
+    period: "2021"
+    kind: certificate
+    tags: [full, dotnet, web]

@@ -1,0 +1,34 @@
+# {{ s.name }}
+
+**{{ s.title }}** · {{ s.location }}
+
+{{ s.summary }}
+
+{{ s.metrics | join(' · ') }}
+
+## {{ s.labels.stack }}
+{% for label, items in s.skills %}
+- **{{ label }}:** {{ items | join(', ') }}
+{%- endfor %}
+
+## {{ s.labels.details }}
+{% for e in s.jobs %}
+### {{ e.title }}, {{ e.company }}{% if e.note %} ({{ e.note }}){% endif %}, {{ e.city }}
+{{ e.period }}
+{% for b in e.bullets %}
+- {{ b }}
+{%- endfor %}
+{% endfor %}
+{%- if s.earlier %}
+{{ s.labels.earlier }}: {{ s.earlier }}
+{%- endif %}
+
+## {{ s.labels.education }}
+{% for line in s.education %}
+- {{ line }}
+{%- endfor %}
+
+## {{ s.labels.languages }}
+{% for line in s.languages %}
+- {{ line }}
+{%- endfor %}

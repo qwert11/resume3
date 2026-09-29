@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{{ page_title }}</title>
+<meta name="description" content="{{ summary_text }}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="{{ prefix }}assets/css/site.css">
+</head>
+<body data-target="{{ profile_id }}">
+<script>window.RESUME_DATA = {{ js_data | safe }};</script>
+<script src="{{ prefix }}assets/js/theme.js"></script>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="topbar">
+  <div class="topbar-in">
+    <nav class="profiles" aria-label="Resume profiles">
+      <span class="profiles-hint" data-i18n-profiles-hint></span>
+      {%- for pr in profiles %}
+      <a href="{{ prefix }}{{ pr.route ~ '/' if pr.route else '' }}index.html" class="{% if pr.id == profile_id %}active{% endif %}" data-i18n-nav-{{ pr.id }}></a>
+      {%- endfor %}
+    </nav>
+    <div class="tools">
+      <button type="button" class="btn" data-theme-cycle aria-label="Theme"></button>
+      <details class="dd dd-lang">
+        <summary class="btn" data-i18n-lang-current></summary>
+        <div class="menu">
+          <button type="button" data-lang="uk"></button>
+          <button type="button" data-lang="en"></button>
+        </div>
+      </details>
+      <details class="dd dd-export">
+        <summary class="btn primary" data-i18n-export></summary>
+        <div class="menu">
+          <a href="resume.pdf" data-dl-pdf data-i18n-btn-pdf></a>
+          <a href="resume.docx" data-dl-docx data-i18n-btn-word></a>
+          <a href="resume.md" data-dl-md data-i18n-btn-markdown></a>
+        </div>
+      </details>
+    </div>
+  </div>
+</header>
+
+<div class="page">
+
+  <div class="sheet">
+
+    <aside class="side">
+      <section class="sblock">
+        <h2 data-i18n-section-location></h2>
+        <ul class="contacts">
+          <li class="c-place" data-uk="{{ location.uk }}" data-en="{{ location.en }}">{{ location.en }}</li>
+        </ul>
+      </section>
+
+      <section class="sblock">
+        <h2 data-i18n-section-stack></h2>
+        <dl class="stack">
+          {%- for g in skill_groups %}
+          <dt data-uk="{{ g.label.uk }}" data-en="{{ g.label.en }}">{{ g.label.en }}</dt>
+          <dd>{% for s in g['items'] %}<span data-uk="{{ s.uk }}" data-en="{{ s.en }}">{{ s.en }}</span> {% endfor %}</dd>
+          {%- endfor %}
+        </dl>
+      </section>
+
+      <section class="sblock">
+        <h2 data-i18n-section-languages></h2>
+        <ul class="plain">
+          {%- for line in languages %}
+          <li data-uk="{{ line.uk }}" data-en="{{ line.en }}">{{ line.en }}</li>
+          {%- endfor %}
+        </ul>
+      </section>
+
+      <section class="sblock">
+        <h2 data-i18n-section-education></h2>
+        <ul class="plain edu">
+          {%- for e in education %}
+          <li>
+            <b data-uk="{{ e.specialty.uk }}" data-en="{{ e.specialty.en }}">{{ e.specialty.en }}</b>
+            <span data-uk="{{ e.institution.uk }}" data-en="{{ e.institution.en }}">{{ e.institution.en }}</span>
+            <span class="when">{{ e.period }}</span>
+          </li>
+          {%- endfor %}
+        </ul>
+      </section>
+    </aside>
+
+    <main id="main" class="body">
+      <header class="head">
+        <h1 data-i18n-name>{{ name_text }}</h1>
+        <p class="role" data-i18n-target-title>{{ title_text }}</p>
+        <p class="summary" data-i18n-summary>{{ summary_text }}</p>
+      </header>
+
+      <ul class="figures">
+        {%- for m in metrics %}
+        <li>
+          <b>{{ m.value }}{% if m.unit.en %} <span data-uk="{{ m.unit.uk }}" data-en="{{ m.unit.en }}">{{ m.unit.en }}</span>{% endif %}</b>
+          <span data-uk="{{ m.label.uk }}" data-en="{{ m.label.en }}">{{ m.label.en }}</span>
+        </li>
+        {%- endfor %}
+      </ul>
+
+      <section class="block">
+        <h2 data-i18n-section-details></h2>
+        {%- for e in jobs %}
+        <article class="job">
+          <p class="when">{{ e.start }} — {% if e.end == 'present' %}<span data-i18n-present></span>{% else %}{{ e.end }}{% endif %}</p>
+          <h3><span data-uk="{{ e.title.uk }}" data-en="{{ e.title.en }}">{{ e.title.en }}</span>, <span data-uk="{{ e.company.uk }}" data-en="{{ e.company.en }}">{{ e.company.en }}</span>{% if e.note.en %} <span class="note" data-uk="({{ e.note.uk }})" data-en="({{ e.note.en }})">({{ e.note.en }})</span>{% endif %}, <span class="city" data-uk="{{ e.city.uk }}" data-en="{{ e.city.en }}">{{ e.city.en }}</span></h3>
+          <ul class="points">
+            {%- for b in e.bullets_en %}
+            <li data-uk="{{ e.bullets_uk[loop.index0] }}" data-en="{{ b }}">{{ b }}</li>
+            {%- endfor %}
+          </ul>
+        </article>
+        {%- endfor %}
+        {%- if earlier.en %}
+        <p class="earlier"><span class="lbl" data-i18n-earlier></span> <span data-uk="{{ earlier.uk }}" data-en="{{ earlier.en }}">{{ earlier.en }}</span></p>
+        {%- endif %}
+      </section>
+
+      <footer class="foot">
+        <span class="muted">{{ build_date }}</span>
+      </footer>
+    </main>
+
+  </div>
+</div>
+
+<script src="{{ prefix }}assets/js/i18n.js"></script>
+</body>
+</html>
